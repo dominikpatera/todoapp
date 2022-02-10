@@ -1,9 +1,14 @@
 import View from './View.js';
 
+/**
+ * Class for managing view of the task
+ */
 class TaskView extends View {
+	// Sidemenu leements
 	_sidemenu = document.querySelector('.sidemenu');
 	_overlay = document.querySelector('.overlay');
 
+	// View elements
 	_parentElement = document.querySelector('.task');
 	_btnsCreateTask = document.querySelectorAll('.btn--create');
 	_btnSaveTask = document.querySelector('.btn--save');
@@ -16,12 +21,20 @@ class TaskView extends View {
 		this._addHandlerTaskChanged();
 	}
 
+	/**
+	 * Listening if a task is solved
+	 *
+	 * @param {function} handler
+	 */
 	addHandlerSolved(handler) {
 		this._btnSolveTask.addEventListener('click', function (e) {
 			handler();
 		});
 	}
 
+	/**
+	 * Listening if a task is going to be edited
+	 */
 	addHandlerEdit() {
 		const self = this;
 		this._parentElement.addEventListener('click', function (e) {
@@ -31,6 +44,9 @@ class TaskView extends View {
 		});
 	}
 
+	/**
+	 * Listening if a task is going to be saved
+	 */
 	addHandlerSave(handler) {
 		const self = this;
 		this._btnSaveTask.addEventListener('click', function (e) {
@@ -38,6 +54,10 @@ class TaskView extends View {
 		});
 	}
 
+	/**
+	 * Listening if something in task changed
+	 * if yes, that allow saving
+	 */
 	_addHandlerTaskChanged() {
 		const self = this;
 		document
@@ -51,6 +71,11 @@ class TaskView extends View {
 			});
 	}
 
+	/**
+	 * Listening if taks is going to be saved;
+	 *
+	 * @param {function} handler
+	 */
 	addHandlerCreateTask(handler) {
 		const self = this;
 		this._btnsCreateTask.forEach((btn) =>
@@ -65,6 +90,11 @@ class TaskView extends View {
 		);
 	}
 
+	/**
+	 * Generating markup for task
+	 *
+	 * @returns {string} markup
+	 */
 	_generateMarkup() {
 		this._btnSaveTask.closest('.nav__item').classList.add('d-none');
 		this._btnSolveTask.closest('.nav__item').classList.remove('d-none');

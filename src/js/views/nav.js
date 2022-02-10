@@ -1,3 +1,6 @@
+/**
+ * Class that manages the state of nav buttons
+ */
 class NavView {
 	_btnsCreateTask = document.querySelectorAll('.btn--create');
 	_btnSaveTask = document.querySelector('.btn--save');

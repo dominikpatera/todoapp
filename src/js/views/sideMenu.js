@@ -1,3 +1,6 @@
+/**
+ * Class that manages the side menu
+ */
 class SideMenuView {
 	_sidemenu = document.querySelector('.sidemenu');
 	_overlay = document.querySelector('.overlay');

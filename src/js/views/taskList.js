@@ -1,15 +1,26 @@
 import View from './View.js';
 
+/**
+ * Class for managing view of the task list
+ */
 class TaskListView extends View {
+	// Sidemenu leements
 	_sidemenu = document.querySelector('.sidemenu');
 	_overlay = document.querySelector('.overlay');
 
+	// View elements
 	_parentElement = document.querySelector('.tasks');
 	_parentElements = [...document.querySelectorAll('.tasks')];
 	_searches = document.querySelectorAll('.search__field');
 	_errorMessage = 'Nemáte žádné úkoly. Svůj první úkol můžete založit zde.';
 	_message = '';
 
+	/**
+	 * Overwriten render function
+	 *
+	 * @param {json} data
+	 * @param {boolean} render
+	 */
 	render(data, render = true) {
 		this._data = data;
 		const markup = this._generateMarkup();
@@ -52,7 +63,6 @@ class TaskListView extends View {
 	}
 
 	addHandlerSearch(handler) {
-		console.log(this._parentElements);
 		const self = this;
 		this._searches.forEach((el) =>
 			el.addEventListener('input', function (e) {

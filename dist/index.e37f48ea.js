@@ -520,6 +520,7 @@ function hmrAcceptRun(bundle, id) {
 
 },{}],"aenu9":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+// Import model
 var _modelJs = require("./model.js");
 // Import views
 var _sideMenu = require("./views/sideMenu");
@@ -530,7 +531,9 @@ var _taskList = require("./views/taskList");
 var _taskListDefault = parcelHelpers.interopDefault(_taskList);
 var _task = require("./views/task");
 var _taskDefault = parcelHelpers.interopDefault(_task);
-const init = function() {
+/**
+ * Init function
+ */ const init = function() {
     removeEmptyTasks();
     resizable();
     _modelJs.openTask(_modelJs.state.tasks.at(-1)?.id);
@@ -545,19 +548,27 @@ const init = function() {
     _taskDefault.default.addHandlerEdit();
     _taskDefault.default.addHandlerSave(controlSaveTask);
 };
-const controlCreateTask = function(task, id) {
+/**
+ * Handler for an empty creating a task
+ */ const controlCreateTask = function() {
     _modelJs.createTask('');
     // Render task
     _taskDefault.default.render(_modelJs.state.task);
     // Render tasks
     _taskListDefault.default.render(_modelJs.state);
 };
-const controlSaveTask = function(text, id) {
-    // Save data
+/**
+ * Handler for saving a task
+ *
+ * @param {string} text
+ * @param {number} id
+ */ const controlSaveTask = function(text, id) {
+    // If its existing task
     if (id) {
         if (text.length > 0) _modelJs.updateTask(id, text);
-        else _modelJs.solveTask(id);
-    } else _modelJs.createTask(text);
+        else _modelJs.solveTask(id); // Otherwise delete (solve) the task
+    } else // If not create a task
+    _modelJs.createTask(text);
     _modelJs.state.task = Object.keys(_modelJs.state.task).length === 0 ? _modelJs.state.tasks[0] : _modelJs.state.task;
     // Render task
     _taskDefault.default.render(_modelJs.state.task);
@@ -565,20 +576,31 @@ const controlSaveTask = function(text, id) {
     // Render tasks
     _taskListDefault.default.render(_modelJs.state);
 };
-const removeEmptyTasks = function() {
+/**
+ * Solving (removing) all empty tasks
+ */ const removeEmptyTasks = function() {
     _modelJs.state.tasks.filter((task)=>task.task.length <= 0
     ).forEach((task)=>_modelJs.solveTask(task.id)
     );
 };
-const controlOpenTask = function(id) {
+/**
+ * Handler for opening a task
+ *
+ * @param {number} id
+ */ const controlOpenTask = function(id) {
     removeEmptyTasks();
+    // Opening a task
     _modelJs.openTask(id);
     _taskDefault.default.render(_modelJs.state.task);
     _taskListDefault.default.render(_modelJs.state);
     _navDefault.default.render(_modelJs.state);
 };
-const controlSolveTask = function() {
+/**
+ * Handler for saving a task
+ */ const controlSolveTask = function() {
+    // Solving a task
     _modelJs.solveTask();
+    // Opening the newest task
     _modelJs.openTask(_modelJs.state.tasks.at(-1)?.id);
     // Render tasks
     _taskListDefault.default.render(_modelJs.state);
@@ -586,13 +608,21 @@ const controlSolveTask = function() {
     _taskDefault.default.render(_modelJs.state.task);
     _navDefault.default.render(_modelJs.state);
 };
-const controlSearchTask = function(text) {
+/**
+ * Handler for searching between tasks
+ *
+ * @param {string} text
+ */ const controlSearchTask = function(text) {
+    // Saving query into as tate
     _modelJs.state.query = text;
+    // Rendering tasks that match the search
     _taskListDefault.default.render(_modelJs.state);
 };
-const resizable = function() {
+/**
+ * Managing height on mobile devices
+ */ const resizable = function() {
     const myResizeFunction = function() {
-        var vh = window.innerHeight * 0.01;
+        const vh = window.innerHeight * 0.01;
         document.documentElement.style.setProperty('--vh', vh + 'px');
     };
     if (window.attachEvent) window.attachEvent('onresize', function() {
@@ -603,7 +633,7 @@ const resizable = function() {
     }, true);
     if (typeof Event === 'function') window.dispatchEvent(new Event('resize'));
     else {
-        var evt = window.document.createEvent('UIEvents');
+        const evt = window.document.createEvent('UIEvents');
         evt.initUIEvent('resize', true, false, window, 0);
         window.dispatchEvent(evt);
     }
@@ -659,20 +689,27 @@ const state = {
     tasks: [],
     query: ''
 };
-const init = function() {
+/**
+ * Initialization function
+ */ const init = function() {
     const storage = localStorage.getItem('tasks');
     if (storage) state.tasks = JSON.parse(storage);
 };
-const persistTasks = function() {
+/**
+ * Saving tasks into local storage
+ */ const persistTasks = function() {
     localStorage.setItem('tasks', JSON.stringify(state.tasks));
 };
 const createTask = function(newTask) {
+    // Task object creation
     const task = {
         id: Number(Date.now().toString().slice(-9)),
         task: newTask.trim()
     };
+    // Changing state
     state.task = task;
     state.tasks.push(task);
+    // Update local storage
     persistTasks();
 };
 const updateTask = function(id, task) {
@@ -704,9 +741,13 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _viewJs = require("./View.js");
 var _viewJsDefault = parcelHelpers.interopDefault(_viewJs);
-class TaskListView extends _viewJsDefault.default {
+/**
+ * Class for managing view of the task list
+ */ class TaskListView extends _viewJsDefault.default {
+    // Sidemenu leements
     _sidemenu = document.querySelector('.sidemenu');
     _overlay = document.querySelector('.overlay');
+    // View elements
     _parentElement = document.querySelector('.tasks');
     _parentElements = [
         ...document.querySelectorAll('.tasks')
@@ -714,7 +755,12 @@ class TaskListView extends _viewJsDefault.default {
     _searches = document.querySelectorAll('.search__field');
     _errorMessage = 'Nemáte žádné úkoly. Svůj první úkol můžete založit zde.';
     _message = '';
-    render(data, render = true) {
+    /**
+	 * Overwriten render function
+	 *
+	 * @param {json} data
+	 * @param {boolean} render
+	 */ render(data, render = true) {
         this._data = data;
         const markup = this._generateMarkup();
         if (!render) return markup;
@@ -748,7 +794,6 @@ class TaskListView extends _viewJsDefault.default {
         );
     }
     addHandlerSearch(handler) {
-        console.log(this._parentElements);
         const self = this;
         this._searches.forEach((el)=>el.addEventListener('input', function(e) {
                 const { value  } = e.target;
@@ -794,21 +839,6 @@ class View {
         this._clear();
         this._parentElement.insertAdjacentHTML('afterbegin', markup);
     }
-    update(data) {
-        this._data = data;
-        const newMarkup = this._generateMarkup();
-        const newDOM = document.createRange().createContextualFragment(newMarkup);
-        const newElements = Array.from(newDOM.querySelectorAll('*'));
-        const curElements = Array.from(this._parentElement.querySelectorAll('*'));
-        newElements.forEach((newEl, i)=>{
-            const curEl = curElements[i];
-            // Updates changed TEXT
-            if (!newEl.isEqualNode(curEl) && newEl.firstChild?.nodeValue.trim() !== '') curEl.textContent = newEl.textContent;
-            // Updates changed ATTRIBUES
-            if (!newEl.isEqualNode(curEl)) Array.from(newEl.attributes).forEach((attr)=>curEl.setAttribute(attr.name, attr.value)
-            );
-        });
-    }
     _clear() {
         this._parentElement.innerHTML = '';
     }
@@ -834,12 +864,6 @@ class View {
         this._clear();
         this._parentElement.insertAdjacentHTML('afterbegin', markup);
     }
-    renderEmpty() {
-        const markup = `
-    `;
-        this._clear();
-        this._parentElement.insertAdjacentHTML('afterbegin', markup);
-    }
 }
 exports.default = View;
 
@@ -848,9 +872,13 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _viewJs = require("./View.js");
 var _viewJsDefault = parcelHelpers.interopDefault(_viewJs);
-class TaskView extends _viewJsDefault.default {
+/**
+ * Class for managing view of the task
+ */ class TaskView extends _viewJsDefault.default {
+    // Sidemenu leements
     _sidemenu = document.querySelector('.sidemenu');
     _overlay = document.querySelector('.overlay');
+    // View elements
     _parentElement = document.querySelector('.task');
     _btnsCreateTask = document.querySelectorAll('.btn--create');
     _btnSaveTask = document.querySelector('.btn--save');
@@ -861,12 +889,18 @@ class TaskView extends _viewJsDefault.default {
         super();
         this._addHandlerTaskChanged();
     }
-    addHandlerSolved(handler) {
+    /**
+	 * Listening if a task is solved
+	 *
+	 * @param {function} handler
+	 */ addHandlerSolved(handler) {
         this._btnSolveTask.addEventListener('click', function(e) {
             handler();
         });
     }
-    addHandlerEdit() {
+    /**
+	 * Listening if a task is going to be edited
+	 */ addHandlerEdit() {
         const self = this;
         this._parentElement.addEventListener('click', function(e) {
             const btn = e.target.closest('.task__text');
@@ -874,13 +908,18 @@ class TaskView extends _viewJsDefault.default {
             self._addHandlerTaskChanged();
         });
     }
-    addHandlerSave(handler) {
+    /**
+	 * Listening if a task is going to be saved
+	 */ addHandlerSave(handler) {
         const self = this;
         this._btnSaveTask.addEventListener('click', function(e) {
             handler(document.querySelector('.task__text--area').value, self._data.id);
         });
     }
-    _addHandlerTaskChanged() {
+    /**
+	 * Listening if something in task changed
+	 * if yes, that allow saving
+	 */ _addHandlerTaskChanged() {
         const self = this;
         document.querySelector('.task__text--area')?.addEventListener('input', function(e) {
             this.dataset.changed = e.target.value.length > 0;
@@ -890,7 +929,11 @@ class TaskView extends _viewJsDefault.default {
             }
         });
     }
-    addHandlerCreateTask(handler) {
+    /**
+	 * Listening if taks is going to be saved;
+	 *
+	 * @param {function} handler
+	 */ addHandlerCreateTask(handler) {
         const self = this;
         this._btnsCreateTask.forEach((btn)=>btn.addEventListener('click', function() {
                 handler();
@@ -902,7 +945,11 @@ class TaskView extends _viewJsDefault.default {
             })
         );
     }
-    _generateMarkup() {
+    /**
+	 * Generating markup for task
+	 *
+	 * @returns {string} markup
+	 */ _generateMarkup() {
         this._btnSaveTask.closest('.nav__item').classList.add('d-none');
         this._btnSolveTask.closest('.nav__item').classList.remove('d-none');
         return `
@@ -917,7 +964,9 @@ exports.default = new TaskView();
 },{"./View.js":"5cUXS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"eAOFF":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-class SideMenuView {
+/**
+ * Class that manages the side menu
+ */ class SideMenuView {
     _sidemenu = document.querySelector('.sidemenu');
     _overlay = document.querySelector('.overlay');
     _listeners = [
@@ -941,7 +990,9 @@ exports.default = new SideMenuView();
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5REnh":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-class NavView {
+/**
+ * Class that manages the state of nav buttons
+ */ class NavView {
     _btnsCreateTask = document.querySelectorAll('.btn--create');
     _btnSaveTask = document.querySelector('.btn--save');
     _btnSolveTask = document.querySelector('.btn--solved');
