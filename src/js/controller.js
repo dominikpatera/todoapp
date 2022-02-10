@@ -1,8 +1,5 @@
 import * as model from './model.js';
 
-// Config & Helpers
-import { MODAL_CLOSE_SEC } from './config.js';
-
 // Import views
 import sideMenuView from './views/sideMenu';
 import navView from './views/nav';
@@ -11,6 +8,7 @@ import taskView from './views/task';
 
 const init = function () {
 	removeEmptyTasks();
+	resizable();
 	model.openTask(model.state.tasks.at(-1)?.id);
 
 	taskListView.render(model.state);
@@ -87,6 +85,34 @@ const controlSolveTask = function () {
 const controlSearchTask = function (text) {
 	model.state.query = text;
 	taskListView.render(model.state);
+};
+
+const resizable = function () {
+	const myResizeFunction = function () {
+		var vh = window.innerHeight * 0.01;
+		document.documentElement.style.setProperty('--vh', vh + 'px');
+	};
+	if (window.attachEvent) {
+		window.attachEvent('onresize', function () {
+			myResizeFunction();
+		});
+	} else if (window.addEventListener) {
+		window.addEventListener(
+			'resize',
+			function () {
+				myResizeFunction();
+			},
+			true
+		);
+	} else {
+	}
+	if (typeof Event === 'function') {
+		window.dispatchEvent(new Event('resize'));
+	} else {
+		var evt = window.document.createEvent('UIEvents');
+		evt.initUIEvent('resize', true, false, window, 0);
+		window.dispatchEvent(evt);
+	}
 };
 
 init();
