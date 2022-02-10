@@ -1,0 +1,17 @@
+{
+  "name": "ukolnicek",
+  "version": "1.0.0",
+  "description": "",
+  "source": "index.html",
+  "default": "index.html",
+  "scripts": {
+    "start": "parcel",
+    "build": "parcel build"
+  },
+  "author": "Dominik Patera",
+  "license": "ISC",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.2.1",
+    "parcel": "^2.2.1"
+  }
+}

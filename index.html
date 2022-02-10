@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+  <script src="https://kit.fontawesome.com/429c553bb1.js" crossorigin="anonymous"></script>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+
+  <link rel="stylesheet" href="src/css/main.scss" />
+  <script type="module" defer src="src/js/controller.js"></script>
+
+  <title>Úkolníček</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="content">
+      <header class="header">
+        <div class="header__menu"><i class="fa-solid fa-bars"></i></div>
+        <a class="header__logo" href=""><img class="header__logo-icon" src="src/img/logo.png"> úkolníček</a>
+        <nav class="nav">
+          <ul class="nav__list">
+            <li class="nav__item"><button class="btn btn--nav btn--solved">
+                <i class="fa-solid fa-check" style="margin-right: 0;"></i>
+              </button></li>
+            <li class="nav__item d-none">
+              <button class="btn btn--nav btn--save">
+                <i class="fa-solid fa-file-arrow-down"></i>
+              </button>
+            </li>
+            <li class="nav__item">
+              <button class="btn btn--nav btn--create">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <div class="row">
+        <div class="tasks-list">
+          <div class="search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" class="search__field" placeholder="Hledat" />
+          </div>
+          <div class="tasks-results">
+            <ul class="tasks">
+            </ul>
+          </div>
+          <div class="pagination"></div>
+          <div class="tasks-list__footer">
+            <p class="copyright">
+              &copy; Copyright by
+              <a class="twitter-link" target="_blank" href="https://linkedin.com/dominikpatera">Dominik Patera</a>.
+            </p>
+          </div>
+
+        </div>
+        <div class="task">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="overlay overlay__hidden"></div>
+  <div class="sidemenu sidemenu__hidden">
+    <header class="header">
+      <div class="header__menu"><i class="fa-solid fa-bars"></i></div>
+      <a class="header__logo" href=""><img class="header__logo-icon" src="src/img/logo.png"> úkolníček</a>
+      <nav class="nav">
+        <ul class="nav__list">
+          <li class="nav__item">
+            <button class="btn btn--nav btn--create">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <div class="row">
+      <div class="tasks-list">
+        <div class="search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" class="search__field" placeholder="Hledat" />
+        </div>
+        <div class="tasks-results">
+          <ul class="tasks">
+          </ul>
+        </div>
+        <div class="tasks-list__footer">
+          <p class="copyright">
+            &copy; Copyright by
+            <a class="twitter-link" target="_blank" href="https://linkedin.com/dominikpatera">Dominik Patera</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

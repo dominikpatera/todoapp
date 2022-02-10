@@ -1,0 +1,1 @@
+{"mappings":"AAAA,KAAK,CAAC,IAAI,GAAG,QAAQ,GAAI,CAAC;IACzB,OAAO,CAAC,GAAG,CAAC,CAAa;AAC1B,CAAC;AAED,IAAI","sources":["src/js/controller.js"],"sourcesContent":["const init = function () {\r\n\tconsole.log('Hello world');\r\n};\r\n\r\ninit();\r\n"],"names":[],"version":3,"file":"index.62406edb.js.map","sourceRoot":"/__parcel_source_root/"}

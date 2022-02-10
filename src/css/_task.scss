@@ -1,0 +1,78 @@
+.task {
+  padding: 1rem 5% 0;
+  width: 66.66%;
+  max-height: 100%;
+  &__text {
+    height: 95%;
+    padding: 1rem 1rem 0;
+    font-size: 1.5rem;
+
+    &--area{
+      resize: none;
+      width: calc(100% - 1%);
+      height: 100%;
+      border: none;
+      background-color: inherit;
+      font-size: inherit;
+      color: inherit;
+      caret-color: $color-grad-2;
+
+      &:focus {
+        outline: none;
+      }
+
+      &::-webkit-scrollbar {
+        width: 5px;
+      }
+  
+      /* Track */
+      &::-webkit-scrollbar-track {
+        // box-shadow: inset 0 0 5px grey;
+        border-radius: 10px;
+      }
+  
+      /* Handle */
+      &::-webkit-scrollbar-thumb {
+        background: $gradient;
+        border-radius: 10px;
+      }
+  
+      // @media only screen and (max-width: $bp-large) {
+      //   max-height: calc(100%);
+      // }
+    }
+  }
+
+  @media only screen and (max-width: $bp-large) {
+    max-height: calc(100vh - 6rem);
+    width: 100%;
+    padding: 0 5%;
+    background: #fff;
+  }
+
+  &__controls {
+    display: flex;
+    justify-content: end;
+    gap: 1rem;
+    padding: 1.25rem 0 2rem;
+    border-radius: 100%;
+    &-btn {
+      font-size: 1rem;
+      padding: 0.6rem;
+      &--save {
+        font-size: 1rem;
+        padding: 0;
+        color: $color-grad-2;
+        background: unset;
+        &:hover {
+          color: $color-grad-2;
+          transform: unset;
+        }
+      }
+    }
+  }
+}
+
+.d-none {
+  display: none;
+}
