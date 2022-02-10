@@ -89,7 +89,7 @@ const controlSearchTask = function (text) {
 
 const resizable = function () {
 	const myResizeFunction = function () {
-		var vh = window.innerHeight * 0.01;
+		const vh = window.innerHeight * 0.01;
 		document.documentElement.style.setProperty('--vh', vh + 'px');
 	};
 	if (window.attachEvent) {
@@ -109,7 +109,7 @@ const resizable = function () {
 	if (typeof Event === 'function') {
 		window.dispatchEvent(new Event('resize'));
 	} else {
-		var evt = window.document.createEvent('UIEvents');
+		const evt = window.document.createEvent('UIEvents');
 		evt.initUIEvent('resize', true, false, window, 0);
 		window.dispatchEvent(evt);
 	}
