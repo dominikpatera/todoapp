@@ -4,8 +4,13 @@
   "description": "",
   "source": "index.html",
   "default": "index.html",
+  "browserslist": [
+    "> 1%",
+    "not dead",
+    "IE 11"
+  ],
   "scripts": {
-    "start": "parcel",
+    "start": "parcel serve",
     "build": "parcel build"
   },
   "author": "Dominik Patera",
@@ -13,5 +18,10 @@
   "devDependencies": {
     "@parcel/transformer-sass": "^2.2.1",
     "parcel": "^2.2.1"
+  },
+  "dependencies": {
+    "core-js": "^3.21.0",
+    "regenerator-runtime": "^0.13.9",
+    "sass": "^1.49.7"
   }
 }
